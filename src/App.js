@@ -1,11 +1,13 @@
 import './index.css';
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
+import RoutesApp from "./routes";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-
+      <BrowserRouter>
+        <RoutesApp />
+       </BrowserRouter>
     </div>
   );
 }
