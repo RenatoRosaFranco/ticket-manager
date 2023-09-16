@@ -1,15 +1,24 @@
 import './style.css';
 import logo from '../../assets/logo.png';
-import {useState} from "react";
+import {useState, useContext } from "react";
 import {Link} from "react-router-dom";
+import { AuthContext } from '../../contexts/auth';
 
 const SignIn = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	function handleSubmit() {
-		console.log('You arrived');
+	const { signIn } = useContext(AuthContext);
+
+	function handleSignIn(e) {
+		e.preventDefault();
+
+		if (email !== '' && password !== '' ) {
+			signIn(email, password);
+		}
 	}
+
+
 
 	return(
 			<div className='container-center'>
@@ -18,8 +27,8 @@ const SignIn = () => {
 						 <img src={logo}  title='Logo do sistema de chamados' />
 					</div>
 
-					<form onClick={() => handleSubmit() }>
-						<h1>Pagina de Login</h1>
+					<form onClick={ handleSignIn }>
+						<h1>Login</h1>
 
 						<input type='email'
 						       placeholder='Type our e-mail'

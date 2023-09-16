@@ -8,8 +8,9 @@ const SignUp = () => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	function handleSubmit() {
-		console.log('You arrived');
+	function handleSubmit(e) {
+		e.preventDefault();
+
 	}
 
 	return(
