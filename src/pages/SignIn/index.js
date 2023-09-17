@@ -1,8 +1,10 @@
 import './style.css';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/images/logo.png';
 import {useState, useContext } from "react";
 import {Link} from "react-router-dom";
-import { AuthContext } from '../../contexts/auth';
+import { AuthContext } from '../../containers/auth';
+
+import { isPresent } from '../../utils/helper';
 
 const SignIn = () => {
 	const [email, setEmail] = useState('')
@@ -13,12 +15,10 @@ const SignIn = () => {
 	function handleSignIn(e) {
 		e.preventDefault();
 
-		if (email !== '' && password !== '' ) {
+		if (isPresent(email) && isPresent(password)) {
 			signIn(email, password);
 		}
 	}
-
-
 
 	return(
 			<div className='container-center'>

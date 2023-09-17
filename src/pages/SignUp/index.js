@@ -1,16 +1,23 @@
 import './style.css';
-import logo from '../../assets/logo.png';
-import {useState} from "react";
+import logo from '../../assets/images/logo.png';
+import { isPresent } from "../../utils/helper";
+import {useContext, useState} from "react";
 import {Link} from "react-router-dom";
+import { AuthContext } from '../../containers/auth';
 
 const SignUp = () => {
 	const [name, setName] = useState('')
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 
-	function handleSubmit(e) {
+	const { signUp, loadingAuth } = useContext(AuthContext);
+
+	async function handleSubmit(e) {
 		e.preventDefault();
 
+		if (isPresent(name)  && isPresent(email) && isPresent(password)) {
+			await signUp(name, email, password);
+		}
 	}
 
 	return(
@@ -20,11 +27,11 @@ const SignUp = () => {
 						 <img src={logo}  title='Task manager Logo' />
 					</div>
 
-					<form onClick={() => handleSubmit() }>
+					<form onClick={ handleSubmit }>
 						<h1>Pagina de Login</h1>
 
 						<input type='text'
-						       placeholder='Type our e-mail'
+						       placeholder='Type our name'
 						       value={name}
 						       onChange={ (e) => { setName(e.target.value) }} />
 
@@ -39,7 +46,7 @@ const SignUp = () => {
 						       onChange={ (e) => { setPassword(e.target.value) }} />
 
 						<button type='submit' >
-							Acessar
+							{ loadingAuth ? 'Carregando' :  'Cadastrar' }
 						</button>
 					</form>
 
