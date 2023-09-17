@@ -8,6 +8,7 @@
 # Env
 .env
 .env.development
+index.js
 
 # testing
 /coverage

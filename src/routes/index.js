@@ -7,6 +7,8 @@ import NotFound from "../pages/Errors/NotFound";
 import NotAuthorized from "../pages/Errors/NotAuthorized";
 
 import Authorizer from "./authorizer";
+import Customer from '../pages/Dashboard/Customer';
+import Profile from '../pages/Dashboard/Profile';
 
 const RoutesApp = () => {
 	return(
@@ -15,7 +17,10 @@ const RoutesApp = () => {
 				<Route path='/register' element={<SignUp/>} />
 
 				<Route path='/dashboard' element={ <Authorizer> <Dashboard /> </Authorizer> } />
+				<Route path='/dashboard/customers' element={<Authorizer> <Customer/> </Authorizer> } />
+				<Route path='/dashboard/profile' element={ <Authorizer> <Profile/> </Authorizer> } />
 
+				<Route path='/not-authorized' element={  <NotAuthorized /> }/>
 				<Route path='*' element={ <NotFound /> } />
 			</Routes>
 	)
