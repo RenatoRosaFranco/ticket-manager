@@ -1,6 +1,6 @@
 import { useState, createContext, useEffect } from "react";
 import { auth, database } from '../config/firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,7 +17,32 @@ function AuthProvider({ children }) {
 	}
 
 	async function signIn(email, password) {
+		setLoadingAuth(true);
 
+		await signInWithEmailAndPassword(auth, email, password)
+				.then(async (value) => {
+					let uid = value.user.uid;
+
+					const docRef = doc(database, "users", uid);
+					const docSnap = await getDoc(docRef);
+
+					let data = {
+						uid: uid,
+						name: docSnap.data.name,
+						email: value.user.email,
+						avatarUrl: docSnap.data.avatarUrl
+					}
+
+					setUser(data);
+					storageUser(data);
+					toast.success('You log in with success.');
+					setLoadingAuth(false)
+					navigate('/dashboard');
+				}).catch((error) => {
+					console.log(error);
+					setLoadingAuth(false);
+					toast.error(`Sorry, something went wrong. ${error}`);
+				})
 	}
 
 	async function signUp(name, email, password) {
